@@ -1,0 +1,17 @@
+{
+    "name": "kroshilin/calculator",
+    "authors": [
+        {
+            "name": "Anton Kroshilin",
+            "email": "kroshilin.a@afkxxx.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Calc\\": "src/"
+        }
+    }
+}
