@@ -8,6 +8,7 @@
 
 namespace CalcTest\Operations;
 
+use Calc\Exceptions\ArgumentValidationException;
 use Calc\Operations\Incrementation;
 use Calc\Operations\OperationInterface;
 use PHPUnit\Framework\TestCase;
@@ -18,6 +19,19 @@ class IncrementTest extends TestCase
     {
         $operation = new Incrementation();
         $this->assertInstanceOf(OperationInterface::class, $operation);
+        return $operation;
+    }
+
+    /**
+     * @depends testCreateOperation
+     * @param Incrementation $operation
+     * @return Incrementation
+     */
+    public function testValidation(Incrementation $operation)
+    {
+        $this->expectException(ArgumentValidationException::class);
+        $operation->setArguments([5,6]);
+        $operation->validateArguments();
         return $operation;
     }
 
