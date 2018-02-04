@@ -15,6 +15,16 @@ use PHPUnit\Framework\TestCase;
 
 class IncrementTest extends TestCase
 {
+    public function dataProvider()
+    {
+        return [
+            [0, 1],
+            [1, 2],
+            [222, 223],
+            [-1, 0]
+        ];
+    }
+
     public function testCreateOperation()
     {
         $operation = new Incrementation();
@@ -36,13 +46,16 @@ class IncrementTest extends TestCase
     }
 
     /**
-     * @depends testCreateOperation
+     * @depends      testCreateOperation
+     * @dataProvider dataProvider
+     * @param $toIncrement
+     * @param $expected
      * @param Incrementation $operation
      */
-    public function testOperationResult(Incrementation $operation)
+    public function testOperationResult(int $toIncrement, int $expected, Incrementation $operation)
     {
-        $operation->setArguments([5]);
+        $operation->setArguments([$toIncrement]);
         $result = $operation->run();
-        $this->assertEquals(6, $result);
+        $this->assertEquals($expected, $result);
     }
 }
