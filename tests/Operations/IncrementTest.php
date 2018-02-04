@@ -10,11 +10,18 @@ namespace CalcTest\Operations;
 
 use Calc\Exceptions\ArgumentValidationException;
 use Calc\Operations\Incrementation;
-use Calc\Operations\OperationInterface;
 use PHPUnit\Framework\TestCase;
 
 class IncrementTest extends TestCase
 {
+    /** @var  Incrementation $operation */
+    protected $operation;
+
+    public function setUp()
+    {
+        $this->operation = new Incrementation();
+    }
+
     public function dataProvider()
     {
         return [
@@ -25,37 +32,26 @@ class IncrementTest extends TestCase
         ];
     }
 
-    public function testCreateOperation()
-    {
-        $operation = new Incrementation();
-        $this->assertInstanceOf(OperationInterface::class, $operation);
-        return $operation;
-    }
-
     /**
-     * @depends testCreateOperation
-     * @param Incrementation $operation
      * @return Incrementation
      */
-    public function testValidation(Incrementation $operation)
+    public function testValidation()
     {
         $this->expectException(ArgumentValidationException::class);
-        $operation->setArguments([5,6]);
-        $operation->validateArguments();
-        return $operation;
+        $this->operation->setArguments([5,6]);
+        $this->operation->validateArguments();
+        return $this->operation;
     }
 
     /**
-     * @depends      testCreateOperation
      * @dataProvider dataProvider
      * @param $toIncrement
      * @param $expected
-     * @param Incrementation $operation
      */
-    public function testOperationResult(int $toIncrement, int $expected, Incrementation $operation)
+    public function testOperationResult(int $toIncrement, int $expected)
     {
-        $operation->setArguments([$toIncrement]);
-        $result = $operation->run();
+        $this->operation->setArguments([$toIncrement]);
+        $result = $this->operation->run();
         $this->assertEquals($expected, $result);
     }
 }
