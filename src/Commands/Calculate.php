@@ -5,6 +5,7 @@ namespace Calc\Commands;
 use Calc\Calculator;
 use Calc\Observers\Observer;
 use Calc\Services\OperationFinderService;
+use Maknz\Slack\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +20,8 @@ class Calculate extends Command
     {
         $this->calculator = new Calculator();
         $this->operationFinder = new OperationFinderService();
-        $observer = new Observer();
+        $slackClient = new Client(getenv('SLACK_HOOK'));
+        $observer = new Observer($slackClient);
         $this->calculator->addObserver($observer);
         parent::__construct($name);
     }

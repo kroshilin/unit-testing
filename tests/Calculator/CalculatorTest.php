@@ -12,6 +12,7 @@ use Calc\Calculator;
 use Calc\Observers\Observer;
 use Calc\Operations\Multiplication;
 use Calc\Operations\OperationInterface;
+use Maknz\Slack\Client;
 use PHPUnit\Framework\TestCase;
 
 class CalculatorTest extends TestCase
@@ -44,7 +45,9 @@ class CalculatorTest extends TestCase
 
     public function testObserversDidWork()
     {
+        $client = $this->createMock(Client::class);
         $observer = $this->getMockBuilder(Observer::class)
+            ->setConstructorArgs([$client])
             ->setMethods(['notify'])
             ->getMock();
 

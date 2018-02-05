@@ -16,9 +16,9 @@ class Observer implements ObserverInterface
     /** @var  Client */
     protected $client;
 
-    public function __construct()
+    public function __construct(Client $client)
     {
-        $this->client = new Client(getenv('SLACK_HOOK'));
+        $this->client = $client;
     }
 
     public function notify(string $operation): bool
